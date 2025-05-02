@@ -4,6 +4,7 @@ pipeline {
     environment {
         GIT_REPO = 'https://github.com/JeanProuvay/DevOpsCiclo12025'
         BRANCH = 'feature/jeanProuvay'
+        SONAR_HOST_URL = 'http://localhost:9000'
         SONARQUBE_SERVER = 'SonarQube-Docker' // Configurado en Jenkins > Manage Jenkins > Configure
         DOCKER_IMAGE = 'miapp-java:latest'
         DOCKER_CONTAINER = 'miapp-container'
@@ -26,6 +27,21 @@ pipeline {
         }
 
         stage('Análisis SonarQube') {
+            environment {
+                // Inyectamos el secreto aquí usando su ID
+                SONAR_TOKEN = credentials('sonarqube-token')
+            }
+            steps {
+                withSonarQubeEnv('SonarQube-Docker') {
+                    sh """
+                    mvn sonar:sonar \
+                        -Dsonar.projectKey=calculadora-api \
+                        -Dsonar.host.url=$SONAR_HOST_URL \
+                        -Dsonar.login=$SONAR_TOKEN
+                    """
+                }
+            }
+            /*
             steps {
                 withSonarQubeEnv('SonarQube-Docker') {
                     withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
@@ -33,6 +49,7 @@ pipeline {
                     }
                 }
             }
+             */
         }
 /*
         stage('Construir Imagen Docker') {
