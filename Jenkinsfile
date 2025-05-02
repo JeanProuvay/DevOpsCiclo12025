@@ -27,8 +27,10 @@ pipeline {
 
         stage('Análisis SonarQube') {
             steps {
-                withSonarQubeEnv("SonarQube-Docker") {
-                    sh 'mvn sonar:sonar'
+                withSonarQubeEnv('SonarQube-Docker') {
+                    withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
+                        sh 'mvn sonar:sonar -Dsonar.login=$SONAR_TOKEN'
+                    }
                 }
             }
         }
