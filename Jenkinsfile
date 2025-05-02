@@ -43,17 +43,19 @@ pipeline {
             }
         }
 
-        stage('Verificar Docker') {
+        stage('Usuario de Jenkins') {
             steps {
-                sh 'which docker && docker --version'
+                sh 'whoami && docker ps'
             }
         }
-
+/*
         stage('Construir Imagen Docker') {
             steps {
                 sh 'docker build -t ${DOCKER_IMAGE} .'
             }
         }
+
+ */
 /*
         stage('Desplegar en Docker') {
             steps {
