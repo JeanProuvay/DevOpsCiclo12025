@@ -32,7 +32,7 @@ public class CalculadoraUITest {
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         
         // Navegar a la URL de la calculadora
-        driver.get("http://localhost:8080/api/calculadora/");
+        driver.get("http://localhost:8081/api/calculadora/");
     }
 
     @AfterEach
