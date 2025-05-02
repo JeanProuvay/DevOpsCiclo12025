@@ -54,7 +54,7 @@ pipeline {
                 // Detener y eliminar contenedor previo si existe
                 sh '''
                     docker rm -f ${DOCKER_CONTAINER} || true
-                    docker run -d --name ${DOCKER_CONTAINER} -p 8081:8081 ${DOCKER_IMAGE}
+                    docker run -d --name ${DOCKER_CONTAINER} -p 8080:8081 ${DOCKER_IMAGE}
                 '''
             }
         }
