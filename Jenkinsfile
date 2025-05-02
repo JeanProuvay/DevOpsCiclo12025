@@ -43,28 +43,22 @@ pipeline {
             }
         }
 
-        stage('Usuario de Jenkins') {
-            steps {
-                sh 'whoami && docker ps'
-            }
-        }
-
         stage('Construir Imagen Docker') {
             steps {
                 sh 'docker build -t ${DOCKER_IMAGE} .'
             }
         }
-/*
+
         stage('Desplegar en Docker') {
             steps {
                 // Detener y eliminar contenedor previo si existe
                 sh '''
                     docker rm -f ${DOCKER_CONTAINER} || true
-                    docker run -d --name ${DOCKER_CONTAINER} -p 8080:8080 ${DOCKER_IMAGE}
+                    docker run -d --name ${DOCKER_CONTAINER} -p 8081:8081 ${DOCKER_IMAGE}
                 '''
             }
         }
-
+/*
         stage('Test de UI con Selenium') {
             steps {
                 // Asegúrate de que el contenedor de Selenium esté en red accesible
