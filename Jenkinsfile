@@ -22,7 +22,7 @@ pipeline {
 
         stage('Compilar Código') {
             steps {
-                sh 'mvn clean package -DskipTests' // O usa "mvn clean package"
+                sh 'mvn clean package -DskipTests'
             }
         }
 
@@ -41,23 +41,14 @@ pipeline {
                     """
                 }
             }
-            /*
-            steps {
-                withSonarQubeEnv('SonarQube-Docker') {
-                    withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
-                        sh 'mvn sonar:sonar -Dsonar.login=$SONAR_TOKEN'
-                    }
-                }
-            }
-             */
         }
-/*
+
         stage('Construir Imagen Docker') {
             steps {
                 sh 'docker build -t ${DOCKER_IMAGE} .'
             }
         }
-
+/*
         stage('Desplegar en Docker') {
             steps {
                 // Detener y eliminar contenedor previo si existe
