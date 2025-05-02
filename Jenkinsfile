@@ -35,7 +35,7 @@ pipeline {
                 withSonarQubeEnv('SonarQube-Docker') {
                     sh """
                     mvn sonar:sonar \
-                        -Dsonar.projectKey=calculadora-api \
+                        -Dsonar.projectKey=CursoDevSecOps \
                         -Dsonar.host.url=$SONAR_HOST_URL \
                         -Dsonar.login=$SONAR_TOKEN
                     """
