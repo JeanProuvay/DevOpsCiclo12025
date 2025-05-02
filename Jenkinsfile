@@ -87,20 +87,35 @@ pipeline {
                 }
             }
         }
-/*
-        stage('Test de UI con Selenium') {
+
+        stage('Probar endpoint de ejemplo') {
             steps {
-                // Asegúrate de que el contenedor de Selenium esté en red accesible
+                echo 'Probando endpoint /api/calculadora/sumar?a=1&b=1'
                 sh '''
-                    docker run --rm --network host \
-                        -v $(pwd)/tests:/tests \
-                        selenium/standalone-chrome:latest \
-                        sh -c "cd /tests && ./run-selenium-tests.sh"
-                '''
+            curl -v "http://localhost:8081/api/calculadora/sumar?a=1&b=1"
+        '''
             }
         }
 
- */
+        stage('Ejecutar pruebas de Selenium') {
+            steps {
+                sh 'mvn test -Dtest=com.ejemplo.calculadora.CalculadoraUITest'
+            }
+        }
+
+        stage('Mostrar logs de la app') {
+            steps {
+                echo 'Logs de la app (desde el contenedor):'
+                sh 'docker logs miapp-container || echo "No se pudo obtener logs del contenedor"'
+            }
+        }
+
+        stage('Detener la aplicación') {
+            steps {
+                echo 'Deteniendo el contenedor miapp-container...'
+                sh 'docker stop miapp-container || echo "No se pudo detener el contenedor"'
+            }
+        }
     }
 
     post {
