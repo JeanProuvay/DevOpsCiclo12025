@@ -48,14 +48,12 @@ pipeline {
                 sh 'whoami && docker ps'
             }
         }
-/*
+
         stage('Construir Imagen Docker') {
             steps {
                 sh 'docker build -t ${DOCKER_IMAGE} .'
             }
         }
-
- */
 /*
         stage('Desplegar en Docker') {
             steps {
