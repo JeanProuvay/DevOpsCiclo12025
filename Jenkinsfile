@@ -116,6 +116,18 @@ pipeline {
                 sh 'docker stop miapp-container || echo "No se pudo detener el contenedor"'
             }
         }
+
+        stage('Eliminar contenedor') {
+            steps {
+                sh 'docker rm -f miapp-container || true'
+            }
+        }
+
+        stage('Eliminar imagen Docker') {
+            steps {
+                sh 'docker rmi -f miapp-java || true'
+            }
+        }
     }
 
     post {
