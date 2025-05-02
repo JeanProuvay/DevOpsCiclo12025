@@ -4,7 +4,7 @@ pipeline {
     environment {
         GIT_REPO = 'https://github.com/JeanProuvay/DevOpsCiclo12025'
         BRANCH = 'feature/jeanProuvay'
-        SONARQUBE_SERVER = 'SonarScanner' // Configurado en Jenkins > Manage Jenkins > Configure
+        SONARQUBE_SERVER = 'SonarQube-Docker' // Configurado en Jenkins > Manage Jenkins > Configure
         DOCKER_IMAGE = 'miapp-java:latest'
         DOCKER_CONTAINER = 'miapp-container'
     }
@@ -27,7 +27,7 @@ pipeline {
 
         stage('Análisis SonarQube') {
             steps {
-                withSonarQubeEnv("SonarScanner") {
+                withSonarQubeEnv("SonarQube-Docker") {
                     sh 'mvn sonar:sonar'
                 }
             }
