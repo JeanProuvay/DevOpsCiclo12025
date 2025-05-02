@@ -8,6 +8,9 @@ pipeline {
         DOCKER_IMAGE = 'miapp-java:latest'
         DOCKER_CONTAINER = 'miapp-container'
     }
+    tools {
+        maven 'maven 3.9.9' // Usa el nombre que configuraste
+    }
 
     stages {
         stage('Clonar Código') {
