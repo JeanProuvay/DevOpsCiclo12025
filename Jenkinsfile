@@ -10,13 +10,6 @@ pipeline {
     }
 
     stages {
-
-        stage('Hola') {
-            steps {
-                echo 'Hola desde Jenkinsfile!'
-            }
-        }
-
         stage('Clonar Código') {
             steps {
                 git branch: "${BRANCH}", url: "${GIT_REPO}"
@@ -25,14 +18,14 @@ pipeline {
 
         stage('Compilar Código') {
             steps {
-                sh './mvnw clean package -DskipTests' // O usa "mvn clean package"
+                sh 'mvn clean package -DskipTests' // O usa "mvn clean package"
             }
         }
 
         stage('Análisis SonarQube') {
             steps {
                 withSonarQubeEnv("${SONARQUBE_SERVER}") {
-                    sh './mvnw sonar:sonar'
+                    sh './mvn sonar:sonar'
                 }
             }
         }
