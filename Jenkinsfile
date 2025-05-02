@@ -43,6 +43,12 @@ pipeline {
             }
         }
 
+        stage('Verificar Docker') {
+            steps {
+                sh 'which docker && docker --version'
+            }
+        }
+
         stage('Construir Imagen Docker') {
             steps {
                 sh 'docker build -t ${DOCKER_IMAGE} .'
