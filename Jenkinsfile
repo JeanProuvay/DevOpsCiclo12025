@@ -58,6 +58,35 @@ pipeline {
                 '''
             }
         }
+
+        stage('Validar que la app esté disponible') {
+            steps {
+                script {
+                    def maxIntentos = 15
+                    def intento = 1
+                    def levantado = false
+
+                    while (intento <= maxIntentos) {
+                        echo "⏳ Esperando la app... intento ${intento}"
+                        def status = sh(
+                                script: "curl -s http://localhost:8081/",
+                                returnStatus: true
+                        )
+                        if (status == 0) {
+                            echo "✅ App disponible"
+                            levantado = true
+                            break
+                        }
+                        sleep time: 5, unit: 'SECONDS'
+                        intento++
+                    }
+
+                    if (!levantado) {
+                        error("❌ La app no se levantó a tiempo")
+                    }
+                }
+            }
+        }
 /*
         stage('Test de UI con Selenium') {
             steps {
